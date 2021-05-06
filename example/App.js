@@ -38,6 +38,7 @@ export default class App extends React.Component {
   login = async () => {
     const { selectedVerifier } = this.state;
     try {
+      // Trigger login
       const { typeOfLogin, clientId, verifier, jwtParams } = verifierMap[selectedVerifier];
       const loginDetails = await TorusSdk.triggerLogin({
         typeOfLogin,
@@ -46,6 +47,14 @@ export default class App extends React.Component {
         jwtParams,
       });
       this.setState({ consoleText: `publicAddress: ${loginDetails.publicAddress}` });
+
+      // Get Torus key 
+      // const loginDetails = await TorusSdk.getTorusKey("google-lrc", "<id>", "<token>");
+      // console.log(loginDetails);
+
+      // Get aggregate Torus key 
+      // const loginDetails = await TorusSdk.getAggregateTorusKey("tkey-google", "<id>", "<cognito token>", "cognito");
+      // console.log(loginDetails);
     } catch (error) {
       console.error(error, "login caught");
     }
